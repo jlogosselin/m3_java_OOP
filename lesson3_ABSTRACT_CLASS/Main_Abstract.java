@@ -1,4 +1,4 @@
-package Abstract_Class_Example;
+package lesson3_ABSTRACT_CLASS;
 
 public class Main_Abstract {
 

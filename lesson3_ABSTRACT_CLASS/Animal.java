@@ -1,8 +1,8 @@
-package Abstract_Class_Example;
+package lesson3_ABSTRACT_CLASS;
 
 public abstract class Animal {
 
-    //this method to be defined and implemented in the non-abstract class Pig
+    //this ABSTRACT method to be defined and implemented in the non-abstract class Pig
     public abstract void animalSound();
 
     public void sleep() {

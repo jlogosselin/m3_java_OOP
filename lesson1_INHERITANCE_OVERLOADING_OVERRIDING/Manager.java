@@ -1,4 +1,4 @@
-package Inheritance_Overloading_Overriding_Example;
+package lesson1_INHERITANCE_OVERLOADING_OVERRIDING;
 
 /*
 All EMPLOYEES have capabilities set out in the EMPLOYEE class,

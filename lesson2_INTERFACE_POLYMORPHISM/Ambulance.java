@@ -1,4 +1,4 @@
-package Interfaces_Polymorphism_Example;
+package lesson2_INTERFACE_POLYMORPHISM;
 
 /*
 Any class that implements EmergencyVehicle must provide implementations for

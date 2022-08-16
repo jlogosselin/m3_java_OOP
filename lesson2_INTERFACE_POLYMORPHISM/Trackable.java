@@ -1,4 +1,4 @@
-package Interfaces_Polymorphism_Example;
+package lesson2_INTERFACE_POLYMORPHISM;
 
 public interface Trackable {
 

@@ -1,4 +1,4 @@
-package Interfaces_Polymorphism_Example;
+package lesson2_INTERFACE_POLYMORPHISM;
 
 /*
 There are times when you might want to define an interface that has the same
