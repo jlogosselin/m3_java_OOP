@@ -29,15 +29,8 @@ public class AddressBookController {
         try (BufferedReader br = new BufferedReader(new FileReader("initialAddressBookData.txt"))){
             String currentLine;
             while ((currentLine = br.readLine()) != null){
-                // separating the data by the double colon:
-                String[] detailed = currentLine.split("::");
-                String firstName =  detailed[0];
-                String lastName = detailed[1];
-                String streetAddress = detailed[2];
-                String city = detailed[3];
-                String state = detailed[4];
-                String zip = detailed[5];
-                Address newFullAddress = new Address(firstName, lastName, streetAddress, city, state, zip);
+                String[] arr = currentLine.split("::");
+                Address newFullAddress = new Address(arr[0], arr[1], arr[2], arr[3], arr[4], arr[5]);
                 addressBookDao.addAddress(newFullAddress);
             }
         } catch (IOException ioe) {
