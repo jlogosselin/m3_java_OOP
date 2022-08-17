@@ -36,7 +36,7 @@ public class StateCapitalsApp {
         }
 
         //inserting data from both arraylists in hashmap:
-        for(int i=0; i<50; i++){
+        for(int i=0; i<states.size(); i++){
             statesAndCapitalData.put(states.get(i), allCapitalObjects.get(i));
         }
 
