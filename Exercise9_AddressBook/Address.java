@@ -51,9 +51,7 @@ public class Address {
         this.lastName = l;
     }
 
-    public void setStreetAddress(String sa){
-        this.streetAddress = sa;
-    }
+    public void setStreetAddress(String sa){ this.streetAddress = sa;}
 
     public void setCity(String c){
         this.city = c;
