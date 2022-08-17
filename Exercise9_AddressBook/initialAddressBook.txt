@@ -1,0 +1,6 @@
+Paul::Shaw::12 Kings Road::Albany::New York::10001
+Stephanie::Bradley::3 Clayton Avenue::Springfield::Illinois::20002
+Connor::Jameson::90 Finch Stree::St. Paul::Minnesota::30001
+Gerald::Jones::8 Harold Avenue::Boston::Massachusetts::50003
+Kenny::Adams::7 High Road::Springfiled::Illinois::20006
+Mary::Rose::5 Cottage Road::St. Minnesota::30005
