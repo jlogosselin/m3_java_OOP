@@ -1,44 +1,75 @@
-package ExerciseJ_ClassRoster.com.sg.classroster.dao;
+package ExerciseK_StudentQuizGrades.dao;
 
-import ExerciseJ_ClassRoster.com.sg.classroster.dto.Student;
+
+
+
+import ExerciseK_StudentQuizGrades.dto.Scores;
+import ExerciseK_StudentQuizGrades.dto.Student;
 
 import java.io.*;
+import java.security.KeyStore;
 import java.util.*;
 
-public class ClassRosterDaoFileImpl implements ClassRosterDao{
+public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
 
-    private Map<String, Student> students = new HashMap<>();
-    public static final String ROSTER_FILE = "roster.txt";
+    private Map<Student, Scores> studentScoreData = new HashMap<>();
+    public static final String QUIZ_SCORES_FILE = "quiz_scores.txt";
     public static final String DELIMITER = "::";
 
-    public ClassRosterDaoFileImpl(){}
+    public StudentQuizGradesDaoImpl(){}
 
     @Override
-    public Student addStudent(String studentId, Student student) throws ClassRosterDaoException {
+    public Map<Student, Scores> addStudentScoreData(Student student, Scores scoreData)
+            throws StudentQuizGradesDaoException {
         loadRoster();
-        Student newStudent = this.students.put(studentId, student);
+        Map<Student, Scores> newStudentScoreData =
+                (Map<Student, Scores>) this.studentScoreData.put(student, scoreData);
         writeRoster();
-        return newStudent;
+        return newStudentScoreData;
+    }
+
+
+    @Override
+    public String[] getAllStudentData() throws StudentQuizGradesDaoException {
+        loadRoster();
+        //MUST LOOK INTO THIS!
+        //excellent link: https://stackoverflow.com/questions/12960265/retrieve-all-values-from-hashmap-keys-in-an-arraylist-java
+        // other link: https://stackoverflow.com/questions/16246821/how-to-get-values-and-keys-from-hashmap
+
+        String[] allStudentScoreData = new String[this.studentScoreData.size()];
+        int x = 0;
+        for(Student key: this.studentScoreData.keySet()) {
+            String fullDataLine = "";
+            fullDataLine += key.getFullName();
+            fullDataLine += "::";
+            Scores s = studentScoreData.get(key);
+            for (Integer i : s.getAllScores()) {
+                fullDataLine += i;
+                fullDataLine += "::";
+            }
+            allStudentScoreData[x] = fullDataLine;
+
+        }
+        return allStudentScoreData;
+    }
+
+
+
+    @Override
+    public ArrayList<Integer> getScoresFromSpecificStudent(String studentName) throws StudentQuizGradesDaoException {
+        loadRoster();
+        ArrayList<Integer> values = this.studentScoreData.get(studentName);
+        return values;
     }
 
     @Override
-    public List<Student> getAllStudents() throws ClassRosterDaoException {
+    public Map<String, ArrayList<Integer>> removeStudentScoreData(String studentName)
+            throws StudentQuizGradesDaoException {
         loadRoster();
-        return new ArrayList(this.students.values());
-    }
-
-    @Override
-    public Student getStudent(String studentId) throws ClassRosterDaoException {
-        loadRoster();
-        return this.students.get(studentId);
-    }
-
-    @Override
-    public Student removeStudent(String studentId) throws ClassRosterDaoException {
-        loadRoster();
-        Student removedStudent = this.students.remove(studentId);
+        Map<String, ArrayList<Integer>> removedStudentScoreData =
+                (Map<String, ArrayList<Integer>>) this.studentScoreData.remove(studentName);
         writeRoster();
-        return removedStudent;
+        return removedStudentScoreData;
     }
 
     ///////////////////////////////////////////////////////////////
@@ -46,24 +77,17 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao{
     //below is a method that can translate a line of text from a txt file
     // into a Student object
 
-    private Student unmarshallStudent(String studentAsText){
-        // studentAsText is expecting a line read in from our file.
-        // For example, it might look like this:
-        // 1234::Ada::Lovelace::Java-September1842
-        //
-        // We then split that line on our DELIMITER - which we are using as ::
-        // Leaving us with an array of Strings, stored in studentTokens.
-        // Which should look like this:
+    private Student unmarshallStudent(String studentScoreAsText){
         // ______________________________________
         // |    |   |        |                  |
         // |1234|Ada|Lovelace|Java-September1842|
         // |    |   |        |                  |
         // --------------------------------------
         //  [0]  [1]    [2]         [3]
-        String[] studentTokens = studentAsText.split(DELIMITER);
+        String[] studentScoreTokens = studentScoreAsText.split(DELIMITER);
 
         // Given the pattern above, the student Id is in index 0 of the array.
-        String studentId = studentTokens[0];
+        String studentId = studentScoreTokens[0];
 
         // Which we can then use to create a new Student object to satisfy
         // the requirements of the Student constructor.
@@ -96,7 +120,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao{
             // Create Scanner for reading the file
             scanner = new Scanner(
                     new BufferedReader(
-                            new FileReader(ROSTER_FILE)));
+                            new FileReader(QUIZ_SCORES_FILE)));
         } catch (FileNotFoundException e) {
             throw new ClassRosterDaoException(
                     "-_- Could not load roster data into memory.", e);
@@ -168,7 +192,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao{
         PrintWriter out;
 
         try {
-            out = new PrintWriter(new FileWriter(ROSTER_FILE));
+            out = new PrintWriter(new FileWriter(QUIZ_SCORES_FILE));
         } catch (IOException e) {
             throw new ClassRosterDaoException(
                     "Could not save student data.", e);
@@ -192,8 +216,6 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao{
         // Clean up
         out.close();
     }
-
-
 
 
 }

@@ -2,6 +2,8 @@ package ExerciseJ_ClassRoster.com.sg.classroster.dto;
 
 public class Student {
 
+    //these methods will be invoked in the VIEW class
+
     private String firstName;
     private String lastName;
     private String studentId;
