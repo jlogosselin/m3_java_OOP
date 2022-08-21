@@ -12,12 +12,10 @@ public class DVDCollectionController {
     private DVDCollectionView view;
     private DVDCollectionDao dao;
 
-    public DVDCollectionController(){}
     public DVDCollectionController(DVDCollectionView v, DVDCollectionDao d){
         this.view = v;
         this.dao = d;
     }
-
 
     public void run() {
         boolean keepGoing = true;
@@ -49,7 +47,6 @@ public class DVDCollectionController {
                     default:
                         unknownCommand();
                 }
-
             }
             exitMessage();
         } catch (DVDCollectionDaoException e) {
@@ -81,32 +78,48 @@ public class DVDCollectionController {
         view.displaySingleDVD(dvd);
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
-
-    //for later...
     private void editDVD() throws DVDCollectionDaoException{
-        System.out.println("Not available yet");
+        //asking the user which DVD they want to edit:
+        view.displayEditDVDBanner();
+        String title = view.getDVDTitleID();
+        DVDItem dvd = dao.getSingleDVD(title);
+        //asking the user what attribute they wish to edit in this DVD:
+        int choice = view.chooseDVDEditingOption(dvd);
+        switch(choice){
+            case 1:
+                dvd.setTitle(view.enterNewTitle());
+                break;
+            case 2:
+                dvd.setReleaseDate(view.enterNewReleaseDate());
+                break;
+            case 3:
+                dvd.setMpaRating(view.enterNewMPARating());
+                break;
+            case 4:
+                dvd.setDirectorName(view.enterNewDirectorName());
+                break;
+            case 5:
+                dvd.setStudioName(view.enterNewStudioName());
+                break;
+            case 6:
+                dvd.setUserRating(view.enterNewUserRating());
+                break;
+        }
+        DVDItem editedDVD = dao.editDVDinCollection(choice, title, dvd);
+
+        view.displayEditingSuccessBanner(editedDVD);
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
-
 
     private void removeDVD() throws DVDCollectionDaoException {
         view.displayRemoveDVDBanner();
         String title = view.getDVDTitleID();
         DVDItem removedDVD = dao.removeDVD(title);
-        view.displayRemoveResult(removedDVD);
+        view.displayRemoveResultBanner(removedDVD);
     }
-
 
     private void unknownCommand() {
         view.displayUnknownCommandBanner();
     }
-
     private void exitMessage() {
         view.displayExitBanner();
     }
