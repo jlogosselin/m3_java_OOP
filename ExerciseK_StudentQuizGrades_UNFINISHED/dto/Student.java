@@ -1,4 +1,4 @@
-package ExerciseK_StudentQuizGrades.dto;
+package ExerciseK_StudentQuizGrades_UNFINISHED.dto;
 
 public class Student {
 
@@ -7,7 +7,7 @@ public class Student {
     public Student(String studentName) {
         this.fullName = studentName;
     }
-    public String getFullName() {
+    public String getStudentName() {
         return fullName;
     }
     public void setFullName(String fn) {

@@ -1,4 +1,4 @@
-package ExerciseK_StudentQuizGrades.ui;
+package ExerciseK_StudentQuizGrades_UNFINISHED.ui;
 
 import java.util.Scanner;
 
@@ -61,41 +61,4 @@ public class UserIOConsoleImpl implements UserIO{
         return Double.parseDouble(d);
     }
 
-    @Override
-    public float readFloat(String prompt){
-        System.out.println(prompt);
-        String f = userInput.nextLine();
-        return Float.parseFloat(f);
-    }
-
-    @Override
-    public float readFloat(String prompt, float min, float max){
-        System.out.println(prompt);
-        String f = userInput.nextLine();
-        while(Float.parseFloat(f) < min && Float.parseFloat(f) > max){
-            System.out.println("Sorry: out of range.");
-            System.out.println(prompt + min + " and " + max + ":");
-            f = userInput.nextLine();
-        }
-        return Float.parseFloat(f);
-    }
-
-    @Override
-    public long readLong(String prompt){
-        System.out.println(prompt);
-        String l = userInput.nextLine();
-        return Long.parseLong(l);
-    }
-
-    @Override
-    public long readLong(String prompt, long min, long max){
-        System.out.println(prompt);
-        String l = userInput.nextLine();
-        while(Long.parseLong(l) < min && Long.parseLong(l) > max){
-            System.out.println("Sorry: out of range.");
-            System.out.println(prompt + min + " and " + max + ":");
-            l = userInput.nextLine();
-        }
-        return Long.parseLong(l);
-    }
 }

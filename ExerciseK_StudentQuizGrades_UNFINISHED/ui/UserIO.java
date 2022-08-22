@@ -1,4 +1,4 @@
-package ExerciseK_StudentQuizGrades.ui;
+package ExerciseK_StudentQuizGrades_UNFINISHED.ui;
 
 public interface UserIO {
     void print(String msg);
