@@ -109,7 +109,6 @@ public class DVDCollectionDaoFileImpl implements DVDCollectionDao{
         String currentLine;
         DVDItem currentDVD;
 
-
         while (scanner.hasNextLine()) {
             currentLine = scanner.nextLine();
             currentDVD = unmarshallDVD(currentLine);
