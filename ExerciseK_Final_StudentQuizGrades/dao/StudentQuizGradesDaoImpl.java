@@ -1,6 +1,6 @@
-package StudentQuizGrades.dao;
+package ExerciseK_Final_StudentQuizGrades.dao;
 
-import StudentQuizGrades.dto.Scores;
+import ExerciseK_Final_StudentQuizGrades.dto.Scores;
 
 import java.io.*;
 import java.util.*;

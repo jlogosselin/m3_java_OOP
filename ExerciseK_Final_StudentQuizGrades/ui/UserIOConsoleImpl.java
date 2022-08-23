@@ -1,4 +1,4 @@
-package StudentQuizGrades.ui;
+package ExerciseK_Final_StudentQuizGrades.ui;
 
 import java.util.Scanner;
 

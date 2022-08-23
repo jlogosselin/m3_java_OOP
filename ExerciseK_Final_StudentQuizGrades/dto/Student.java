@@ -1,4 +1,4 @@
-package StudentQuizGrades.dto;
+package ExerciseK_Final_StudentQuizGrades.dto;
 
 public class Student {
 

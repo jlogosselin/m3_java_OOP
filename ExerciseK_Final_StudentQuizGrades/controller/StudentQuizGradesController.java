@@ -1,11 +1,11 @@
-package StudentQuizGrades.controller;
+package ExerciseK_Final_StudentQuizGrades.controller;
 
 
-import StudentQuizGrades.dao.StudentQuizGradesDao;
-import StudentQuizGrades.dao.StudentQuizGradesDaoException;
-import StudentQuizGrades.dto.Scores;
-import StudentQuizGrades.dto.Student;
-import StudentQuizGrades.ui.StudentQuizGradesView;
+import ExerciseK_Final_StudentQuizGrades.dao.StudentQuizGradesDao;
+import ExerciseK_Final_StudentQuizGrades.dao.StudentQuizGradesDaoException;
+import ExerciseK_Final_StudentQuizGrades.dto.Scores;
+import ExerciseK_Final_StudentQuizGrades.dto.Student;
+import ExerciseK_Final_StudentQuizGrades.ui.StudentQuizGradesView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

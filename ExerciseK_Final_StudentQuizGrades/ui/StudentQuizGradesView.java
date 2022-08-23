@@ -1,17 +1,15 @@
-package StudentQuizGrades.ui;
+package ExerciseK_Final_StudentQuizGrades.ui;
 
-import StudentQuizGrades.dto.Scores;
-import StudentQuizGrades.dto.Student;
+import ExerciseK_Final_StudentQuizGrades.dto.Scores;
+import ExerciseK_Final_StudentQuizGrades.dto.Student;
 
 import java.text.DecimalFormat;
-import java.util.Formatter;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class StudentQuizGradesView {
 
-    private StudentQuizGrades.ui.UserIO io;
+    private ExerciseK_Final_StudentQuizGrades.ui.UserIO io;
     public StudentQuizGradesView(UserIO u){
         this.io = u;
     }

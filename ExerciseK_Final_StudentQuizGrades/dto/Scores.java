@@ -1,4 +1,4 @@
-package StudentQuizGrades.dto;
+package ExerciseK_Final_StudentQuizGrades.dto;
 
 import java.util.ArrayList;
 import java.util.List;

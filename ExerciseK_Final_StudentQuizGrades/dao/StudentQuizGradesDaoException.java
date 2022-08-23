@@ -1,4 +1,4 @@
-package StudentQuizGrades.dao;
+package ExerciseK_Final_StudentQuizGrades.dao;
 
 public class StudentQuizGradesDaoException extends Exception{
 
