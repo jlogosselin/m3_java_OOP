@@ -1,8 +1,6 @@
-package ExerciseK_StudentQuizGrades_UNFINISHED.dao;
+package StudentQuizGrades.dao;
 
-import Assignment_DVDCollection.dto.DVDItem;
-import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Scores;
-import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Student;
+import StudentQuizGrades.dto.Scores;
 
 import java.io.*;
 import java.util.*;

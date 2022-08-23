@@ -1,9 +1,8 @@
-package ExerciseK_StudentQuizGrades_UNFINISHED.ui;
+package StudentQuizGrades.ui;
 
 import java.util.Scanner;
 
 public class UserIOConsoleImpl implements UserIO{
-
     Scanner userInput = new Scanner(System.in);
 
     public UserIOConsoleImpl(){}
@@ -41,24 +40,4 @@ public class UserIOConsoleImpl implements UserIO{
         }
         return Integer.parseInt(i);
     }
-
-    @Override
-    public double readDouble(String prompt){
-        System.out.println(prompt);
-        String d = userInput.nextLine();
-        return Double.parseDouble(d);
-    }
-
-    @Override
-    public double readDouble(String prompt, double min, double max){
-        System.out.println(prompt + min + " and " + max + ":");
-        String d = userInput.nextLine();
-        while(Double.parseDouble(d) < min && Double.parseDouble(d) > max){
-            System.out.println("Sorry: out of range.");
-            System.out.println(prompt + min + " and " + max + ":");
-            d = userInput.nextLine();
-        }
-        return Double.parseDouble(d);
-    }
-
 }

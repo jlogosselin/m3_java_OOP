@@ -1,15 +1,14 @@
-package ExerciseK_StudentQuizGrades_UNFINISHED.ui;
+package StudentQuizGrades.ui;
 
-
-import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Scores;
-import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Student;
+import StudentQuizGrades.dto.Scores;
+import StudentQuizGrades.dto.Student;
 
 import java.util.List;
 import java.util.Map;
 
 public class StudentQuizGradesView {
 
-    private ExerciseK_StudentQuizGrades_UNFINISHED.ui.UserIO io;
+    private StudentQuizGrades.ui.UserIO io;
     public StudentQuizGradesView(UserIO u){
         this.io = u;
     }

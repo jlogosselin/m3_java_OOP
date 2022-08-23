@@ -1,10 +1,11 @@
-package ExerciseK_StudentQuizGrades_UNFINISHED.controller;
+package StudentQuizGrades.controller;
 
-import ExerciseK_StudentQuizGrades_UNFINISHED.dao.StudentQuizGradesDao;
-import ExerciseK_StudentQuizGrades_UNFINISHED.dao.StudentQuizGradesDaoException;
-import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Scores;
-import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Student;
-import ExerciseK_StudentQuizGrades_UNFINISHED.ui.StudentQuizGradesView;
+
+import StudentQuizGrades.dao.StudentQuizGradesDao;
+import StudentQuizGrades.dao.StudentQuizGradesDaoException;
+import StudentQuizGrades.dto.Scores;
+import StudentQuizGrades.dto.Student;
+import StudentQuizGrades.ui.StudentQuizGradesView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,14 +114,9 @@ public class StudentQuizGradesController {
 
     }
 
-
-
-
-
     private void unknownCommand() {
         view.displayUnknownCommandBanner();
     }
-
     private void exitMessage() {
         view.displayExitBanner();
     }

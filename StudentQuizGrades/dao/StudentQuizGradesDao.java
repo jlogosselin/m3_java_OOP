@@ -1,7 +1,6 @@
-package ExerciseK_StudentQuizGrades_UNFINISHED.dao;
+package StudentQuizGrades.dao;
 
-import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Scores;
-import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Student;
+import StudentQuizGrades.dto.Scores;
 
 import java.util.List;
 import java.util.Map;
