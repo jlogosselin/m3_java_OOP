@@ -102,8 +102,10 @@ public class StudentQuizGradesController {
         view.displayRemovedStudentScoreData(studentName, changedMap);
     }
 
-    private void getAverageQuizScoreForWholeClass(){
-
+    private void getAverageQuizScoreForWholeClass() throws StudentQuizGradesDaoException{
+        view.displayAverageScoreBanner();
+        Map<Integer, Double> results = dao.getAverageScore();
+        view.displayAverage(results);
     }
 
     private void getListOfStudentWithHighestQuizScore(){

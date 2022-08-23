@@ -16,4 +16,5 @@ public interface StudentQuizGradesDao {
 
     Map<String, Scores> removeSingleRowOfStudentScores(String studentName) throws StudentQuizGradesDaoException;
 
+    Map<Integer, Double> getAverageScore() throws StudentQuizGradesDaoException;
 }

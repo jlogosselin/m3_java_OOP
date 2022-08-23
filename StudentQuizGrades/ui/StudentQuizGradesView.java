@@ -98,6 +98,13 @@ public class StudentQuizGradesView {
         }
     }
 
+    public void displayAverage(Map<Integer, Double> singleMapRowForAverages){
+        Map.Entry<Integer,Double> entry = singleMapRowForAverages.entrySet().iterator().next();
+        Integer numberOfValues = entry.getKey();
+        Double avg = entry.getValue();
+        io.print("The average of all " + numberOfValues + " quiz scores is: " + avg);
+    }
+
 
 
 

@@ -57,6 +57,24 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
         return removedStudentScoreData;
     }
 
+    @Override
+    public Map<Integer, Double> getAverageScore() throws StudentQuizGradesDaoException{
+        List<String> allData = new ArrayList<String>();
+        double total=0;
+        int numberScores=0;
+        loadQuizScoreFileIntoHashMap();
+        for(Map.Entry<String, Scores> entry : this.studentScoreData.entrySet()) {
+            Scores values = entry.getValue();
+            for(int n : values.getListOfAllScores()){
+                total += n;
+                numberScores++;
+            }
+        }
+        Map<Integer, Double> results = new HashMap<Integer,Double>();
+        results.put(numberScores, total / numberScores);
+        return results;
+    }
+
     private void loadQuizScoreFileIntoHashMap() throws StudentQuizGradesDaoException {
         Scanner scanner;
         try {
