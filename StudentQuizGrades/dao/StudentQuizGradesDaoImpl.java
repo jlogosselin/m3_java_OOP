@@ -59,10 +59,10 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
 
     @Override
     public Map<Integer, Double> getAverageScore() throws StudentQuizGradesDaoException{
+        loadQuizScoreFileIntoHashMap();
         List<String> allData = new ArrayList<String>();
         double total=0;
         int numberScores=0;
-        loadQuizScoreFileIntoHashMap();
         for(Map.Entry<String, Scores> entry : this.studentScoreData.entrySet()) {
             Scores values = entry.getValue();
             for(int n : values.getListOfAllScores()){
@@ -73,6 +73,60 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
         Map<Integer, Double> results = new HashMap<Integer,Double>();
         results.put(numberScores, total / numberScores);
         return results;
+    }
+
+    @Override
+    public LinkedHashMap<String, Integer> preliminaryMethodForGettingTotalScores() throws StudentQuizGradesDaoException{
+        loadQuizScoreFileIntoHashMap();
+        Map<String, Integer> finalResults = new HashMap<String, Integer>();
+        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        for(Map.Entry<String, Scores> entry : this.studentScoreData.entrySet()) {
+            int total = 0;
+            Scores values = entry.getValue();
+            for(int n : values.getListOfAllScores()){
+                total += n;
+            }
+            finalResults.put(entry.getKey(), total);
+        }
+        for (Map.Entry<String, Integer> entry : finalResults.entrySet()) {
+            list.add(entry.getValue());
+        }
+        Collections.sort(list);
+        for (int num : list) {
+            for (Map.Entry<String, Integer> entry : finalResults.entrySet()) {
+                if (entry.getValue().equals(num)) {
+                    sortedMap.put(entry.getKey(), num);
+                }
+            }
+        }
+        return sortedMap;
+    }
+
+    @Override
+    public String getHighestScore(LinkedHashMap<String, Integer> prelimResults){
+        int count = 1;
+        String lastResult = "";
+        for(Map.Entry<String, Integer> entry : prelimResults.entrySet()) {
+            if (count == prelimResults.size()){
+                lastResult += entry.getKey() + " has the highest total score: " + entry.getValue() + " points.";
+            }
+            count++;
+        }
+        return lastResult;
+    }
+
+    @Override
+    public String getLowestScore(LinkedHashMap<String, Integer> prelimResults){
+        int count = 1;
+        String lastResult = "";
+        for(Map.Entry<String, Integer> entry : prelimResults.entrySet()) {
+            if (count == 1){
+                lastResult += entry.getKey() + " has the lowest total score: " + entry.getValue() + " points.";
+                break;
+            }
+        }
+        return lastResult;
     }
 
     private void loadQuizScoreFileIntoHashMap() throws StudentQuizGradesDaoException {

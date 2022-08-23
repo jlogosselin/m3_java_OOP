@@ -8,6 +8,7 @@ import StudentQuizGrades.dto.Student;
 import StudentQuizGrades.ui.StudentQuizGradesView;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,10 +47,10 @@ public class StudentQuizGradesController {
                         getAverageQuizScoreForWholeClass();
                         break;
                     case 6:
-                        getListOfStudentWithHighestQuizScore();
+                        getListOfStudentsWithHighestQuizScores();
                         break;
                     case 7:
-                        getListOfStudentWithLowestQuizScore();
+                        getListOfStudentsWithLowestQuizScores();
                         break;
                     case 8:
                         keepGoing = false;
@@ -108,12 +109,18 @@ public class StudentQuizGradesController {
         view.displayAverage(results);
     }
 
-    private void getListOfStudentWithHighestQuizScore(){
-
+    private void getListOfStudentsWithHighestQuizScores() throws StudentQuizGradesDaoException{
+        view.displayStudentsWithHighestQuizScoresBanner();
+        LinkedHashMap<String, Integer> preliminaryResults = dao.preliminaryMethodForGettingTotalScores();
+        String finalResult = dao.getHighestScore(preliminaryResults);
+        view.displayHighestScoreStudent(finalResult);
     }
 
-    private void getListOfStudentWithLowestQuizScore(){
-
+    private void getListOfStudentsWithLowestQuizScores() throws StudentQuizGradesDaoException{
+        view.displayStudentsWithLowestQuizScoresBanner();
+        LinkedHashMap<String, Integer> preliminaryResults = dao.preliminaryMethodForGettingTotalScores();
+        String finalResult = dao.getLowestScore(preliminaryResults);
+        view.displayLowestScoreStudent(finalResult);
     }
 
     private void unknownCommand() {

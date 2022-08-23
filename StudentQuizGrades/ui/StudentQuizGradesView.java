@@ -3,6 +3,9 @@ package StudentQuizGrades.ui;
 import StudentQuizGrades.dto.Scores;
 import StudentQuizGrades.dto.Student;
 
+import java.text.DecimalFormat;
+import java.util.Formatter;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +42,8 @@ public class StudentQuizGradesView {
     public void displayAverageScoreBanner() {io.print("=== Displaying average score of whole group ===");}
     public String getStudentNameChoice() {return io.readString("Please enter the Student name.");}
     public void displayRemoveSpecificStudentScoreDataBanner () {io.print("=== Removing specific student-score row ===");}
+    public void displayStudentsWithHighestQuizScoresBanner(){io.print("=== Displaying student with highest total score ===");}
+    public void displayStudentsWithLowestQuizScoresBanner(){io.print("=== Displaying student with lowest total score ===");}
     public void displayExitBanner() {io.print("Goodbye!!!");}
     public void displayUnknownCommandBanner() {io.print("Unknown Command!!!");}
     public void displayErrorMessage(String errorMsg) {
@@ -102,10 +107,17 @@ public class StudentQuizGradesView {
         Map.Entry<Integer,Double> entry = singleMapRowForAverages.entrySet().iterator().next();
         Integer numberOfValues = entry.getKey();
         Double avg = entry.getValue();
-        io.print("The average of all " + numberOfValues + " quiz scores is: " + avg);
+        DecimalFormat numberFormat = new DecimalFormat("#.00");
+        io.print("The average of all " + numberOfValues + " quiz scores is: " + numberFormat.format(avg));
     }
 
+    public void displayHighestScoreStudent(String results){
+        io.print(results);
+    }
 
+    public void displayLowestScoreStudent(String results){
+        io.print(results);
+    }
 
 
 }

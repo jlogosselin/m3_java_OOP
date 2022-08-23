@@ -2,6 +2,7 @@ package StudentQuizGrades.dao;
 
 import StudentQuizGrades.dto.Scores;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +18,12 @@ public interface StudentQuizGradesDao {
     Map<String, Scores> removeSingleRowOfStudentScores(String studentName) throws StudentQuizGradesDaoException;
 
     Map<Integer, Double> getAverageScore() throws StudentQuizGradesDaoException;
+
+    LinkedHashMap<String, Integer> preliminaryMethodForGettingTotalScores() throws StudentQuizGradesDaoException;
+
+    String getHighestScore(LinkedHashMap<String, Integer> l) throws StudentQuizGradesDaoException;
+
+    String getLowestScore(LinkedHashMap<String, Integer> l) throws StudentQuizGradesDaoException;
+
+
 }
