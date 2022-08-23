@@ -1,99 +1,66 @@
 package ExerciseK_StudentQuizGrades_UNFINISHED.dao;
 
+import Assignment_DVDCollection.dto.DVDItem;
 import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Scores;
 import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Student;
 
 import java.io.*;
 import java.util.*;
+import java.util.HashMap;
 
 public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
 
     //creating our COLLECTION DATA STRUCTURE attribute (of class types STUDENT & SCORES):
-    private Map<Student, Scores> studentScoreData = new HashMap<>();
+    private Map<String, Scores> studentScoreData = new HashMap<>();
     public static final String QUIZ_SCORES_FILE = "quiz_scores.txt";
     public static final String DELIMITER = "::";
 
     public StudentQuizGradesDaoImpl(){}
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////// implementing methods from DAO_INTERFACE  ///////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////
-
     @Override
-    public Map<Student, Scores> setSingleRowOfStudentScores(Student student, Scores scoreData)
-            throws StudentQuizGradesDaoException {
+    public List<String> getAllStudentScoresRowsAsListOfStrings() throws StudentQuizGradesDaoException{
+
         loadQuizScoreFileIntoHashMap();
-        Map<Student, Scores> newStudentScoreData =
-                (Map<Student, Scores>) this.studentScoreData.put(student, scoreData);
-        writeHashMapToFile();
-        return newStudentScoreData;
+        List<String> allData = new ArrayList<String>();
+        for(Map.Entry<String, Scores> entry : this.studentScoreData.entrySet()) {
+            String key = entry.getKey();
+            Scores value = entry.getValue();
+            String singleStudentScoreRow = this.marshallStudentScoreData(key, value);
+            allData.add(singleStudentScoreRow);
+        }
+        return allData;
     }
 
-
     @Override
-    public List<String> getAllStudentScoresRowsAsListOfStrings() throws StudentQuizGradesDaoException {
-
+    public Map<String, Scores> setSingleRowOfStudentScores(String studentName, Scores scoreData)
+            throws StudentQuizGradesDaoException {
         loadQuizScoreFileIntoHashMap();
-
-        List<String> listOfAllStudentScoreData = new ArrayList<String>();
-        int x = 0;
-        for(Student key: this.studentScoreData.keySet()) {
-            String fullDataLine = "";
-            fullDataLine += key.getStudentName();
-            fullDataLine += "::";
-            Scores s = studentScoreData.get(key);
-            for (Integer i : s.getListOfAllScores()) {
-                fullDataLine += i;
-                fullDataLine += "::";
-            }
-            listOfAllStudentScoreData.add(fullDataLine);
-        }
-
-        return listOfAllStudentScoreData;
+        this.studentScoreData.put(studentName, scoreData);
+        Map<String, Scores> newStudentScoreData = this.studentScoreData;
+        writeHashMapToFile();
+        return newStudentScoreData;
     }
 
     @Override
     public List<Integer> getScoresFromSpecificStudent(String studentName) throws StudentQuizGradesDaoException {
         loadQuizScoreFileIntoHashMap();
-        Scores scores = this.studentScoreData.get(studentName);
-        List<Integer> values = scores.getListOfAllScores();
-        return values;
+        List<Integer> scores = this.studentScoreData.get(studentName).getListOfAllScores();
+        return scores;
     }
 
     @Override
-    public Map<Student, Scores> removeSingleRowOfStudentScores(String studentName)
+    public Map<String, Scores>  removeSingleRowOfStudentScores(String studentName)
             throws StudentQuizGradesDaoException {
         loadQuizScoreFileIntoHashMap();
-        Map<Student, Scores> removedStudentScoreData =
-                (Map<Student, Scores>) this.studentScoreData.remove(studentName);
+        this.studentScoreData.remove(studentName);
+        Map<String, Scores> removedStudentScoreData = new HashMap<String, Scores>();
+        removedStudentScoreData.putAll(this.studentScoreData);
         writeHashMapToFile();
         return removedStudentScoreData;
     }
 
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    /*
-    the method below reads the quiz score file into memory, saving the data
-    inside our class attribute: the HASHMAP DATA STRUCTURE (declared + initialised above)
-     */
-
     private void loadQuizScoreFileIntoHashMap() throws StudentQuizGradesDaoException {
-
         Scanner scanner;
-
         try {
             // Create Scanner for reading the file
             scanner = new Scanner(
@@ -103,45 +70,23 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
             throw new StudentQuizGradesDaoException(
                     "-_- Could not load quiz score data into memory.", e);
         }
-
         String currentLine;
-
-        Map<Student, Scores> tempMap;
+        Map<String, Scores> tempSingleRowMap;
 
         while (scanner.hasNextLine()) {
 
-            // get the next line in the file
             currentLine = scanner.nextLine();
-            //System.out.println("Current line: " + currentLine);
-
-            // unmarshalling the line (ie: eliminating its delimiters) into a temp map
-            tempMap = unmarshallStudentScoreData(currentLine);
-
-            //extracting key and value from the temp map:
-            Map.Entry<Student, Scores> entry = tempMap.entrySet().iterator().next();
-            String key = entry.getKey().getStudentName();
-            Student tempStudent = new Student(key);
+            tempSingleRowMap = unmarshallStudentScoreRow(currentLine);
+            Map.Entry<String, Scores> entry = tempSingleRowMap.entrySet().iterator().next();
+            String name = entry.getKey();
             Scores tempScores = entry.getValue();
-
-            //saving data into our class attribute HASHMAP:
-            this.studentScoreData.put(tempStudent, tempScores);
-
+            this.studentScoreData.put(name, tempScores);
         }
         // close scanner
         scanner.close();
     }
 
-
-    //******************************************************************************************
-    //******************************************************************************************
-
-    /*
-    below is the helper method that can translate a line of text from a txt file
-    into a one-row HASHMAP (of class types STUDENT & SCORES)
-     */
-
-
-    private Map<Student, Scores> unmarshallStudentScoreData(String studentScoreAsText){
+    private Map<String, Scores> unmarshallStudentScoreRow(String studentScoreAsText){
 
         //STUDENT-SCORE data will be written in the txt file as so:
         // ______________________________________
@@ -152,57 +97,18 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
         //       [0]    [1][2][3][4][5] etc...
 
         String[] allTokens = studentScoreAsText.split(DELIMITER);
-
         String studentName = allTokens[0];
 
-        Student studentFromFile = new Student(studentName);
-
         Scores scoresListFromFile = new Scores();
-
         for(int i=1; i<=5; i++){
             scoresListFromFile.addSingleScoreToList(Integer.parseInt(allTokens[i]));
         }
 
-
-        //last but not least: combining the STUDENT and SCORES object to add data to the existing
-        //HASHMAP object, before returning :
-
-        Map<Student, Scores> hashMapFromFile = new HashMap<>();
-        hashMapFromFile.put(studentFromFile,scoresListFromFile);
-               // (Map<Student, Scores>) this.studentScoreData.put(studentFromFile,scoresListFromFile);
-
-/*
-        System.out.println("All data stored in temp hash map so far:");
-        for( Map.Entry<Student, Scores> entry : hashMapFromFile.entrySet() ){
-            System.out.println( entry.getKey().getStudentName() + " => " + entry.getValue().printFullListOfScores() );
-        }
-        System.out.println("All data stored in class hash map so far:");
-        for( Map.Entry<Student, Scores> entry : this.studentScoreData.entrySet() ){
-            System.out.println( entry.getKey().getStudentName() + " => " + entry.getValue().printFullListOfScores() );
-        }
-
- */
+        Map<String, Scores> hashMapFromFile = new HashMap<>();
+        hashMapFromFile.put(studentName,scoresListFromFile);
 
         return hashMapFromFile;
     }
-
-
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    /*
-    the method below writes the student-score data stored in our class HASHMAP to a txt file:
-     */
 
     /**
      * Writes all students in the roster out to a ROSTER_FILE.  See loadRoster
@@ -210,7 +116,6 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
      *
      * @throws StudentQuizGradesDaoException if an error occurs writing to the file
      */
-
 
     private void writeHashMapToFile() throws StudentQuizGradesDaoException {
 
@@ -223,39 +128,28 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
                     "Could not save student-score data.", e);
         }
 
-        String studentScoreDataAsText;
-
-        List<String> studentScoresList = this.getAllStudentScoresRowsAsListOfStrings();
-
-        for (String s : studentScoresList) {
-
-            studentScoreDataAsText = marshallStudent(s);
-
-            // write the data to the file
+        for(Map.Entry<String, Scores> entry : this.studentScoreData.entrySet()) {
+            String key = entry.getKey();
+            Scores value = entry.getValue();
+            String studentScoreDataAsText = this.marshallStudentScoreData(key, value);
             out.println(studentScoreDataAsText);
-
-            // force PrintWriter to write line to the file
             out.flush();
         }
+
         // Clean up
         out.close();
     }
 
+    private String marshallStudentScoreData(String k, Scores v) throws StudentQuizGradesDaoException{
 
-    //******************************************************************************************
-    //******************************************************************************************
-
-
-    /*
-    below is the helper method that can translate the data from our HASHMAP into
-     a line of text, so that it can then be written properly into a file.
-     */
-
-
-    private String marshallStudent(String singleRowOfStudentScores){
-
-        return singleRowOfStudentScores;
+        String fullDataLine = "";
+        fullDataLine += k;
+        Scores s = studentScoreData.get(k);
+        for (Integer i : s.getListOfAllScores()) {
+            fullDataLine += DELIMITER;
+            fullDataLine += i;
+        }
+        return fullDataLine;
     }
-
 
 }

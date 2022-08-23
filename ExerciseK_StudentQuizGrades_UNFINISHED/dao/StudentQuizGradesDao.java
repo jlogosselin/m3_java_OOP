@@ -8,14 +8,13 @@ import java.util.Map;
 
 public interface StudentQuizGradesDao {
 
-    Map<Student, Scores> setSingleRowOfStudentScores(Student student, Scores scoreData)
+    Map<String, Scores> setSingleRowOfStudentScores(String studentName, Scores scoreData)
             throws StudentQuizGradesDaoException;
 
     List<String> getAllStudentScoresRowsAsListOfStrings() throws StudentQuizGradesDaoException;
 
     List<Integer> getScoresFromSpecificStudent(String studentName) throws StudentQuizGradesDaoException;
 
-    Map<Student, Scores>  removeSingleRowOfStudentScores(String studentName) throws StudentQuizGradesDaoException;
-    //previously: Map<String, ArrayList<Integer>>
+    Map<String, Scores> removeSingleRowOfStudentScores(String studentName) throws StudentQuizGradesDaoException;
 
 }

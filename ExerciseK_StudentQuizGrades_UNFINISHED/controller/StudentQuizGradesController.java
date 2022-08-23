@@ -6,6 +6,7 @@ import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Scores;
 import ExerciseK_StudentQuizGrades_UNFINISHED.dto.Student;
 import ExerciseK_StudentQuizGrades_UNFINISHED.ui.StudentQuizGradesView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +71,8 @@ public class StudentQuizGradesController {
     //done
     private void listAllStudentScoresRows() throws StudentQuizGradesDaoException {
         view.displayAllStudentScoreRowsBanner();
-        List<String> studentList = dao.getAllStudentScoresRowsAsListOfStrings();
+        List<String> studentList = new ArrayList<>();
+        studentList.addAll(dao.getAllStudentScoresRowsAsListOfStrings());
         view.displayAllStudentScoreRows(studentList);
     }
 
@@ -78,8 +80,9 @@ public class StudentQuizGradesController {
     private void createSingleStudentScoresRow() throws StudentQuizGradesDaoException {
         view.displayCreateStudentScoreRowBanner();
         Student newStudent = view.enterNewStudentName();
+        String newStudentName = newStudent.getStudentName();
         Scores newScores = view.enterNewRowOfScores();
-        dao.setSingleRowOfStudentScores(newStudent, newScores);
+        dao.setSingleRowOfStudentScores(newStudentName, newScores);
         view.displayCreateStudentScoreRowSuccessBanner();
     }
 
@@ -94,12 +97,9 @@ public class StudentQuizGradesController {
     private void removeStudentScoresRow() throws StudentQuizGradesDaoException {
         view.displayRemoveSpecificStudentScoreDataBanner();
         String studentName = view.enterStudentNameChoice();
-        Map<Student, Scores> newList = dao.removeSingleRowOfStudentScores(studentName);
-        view.displayRemoveResult(studentName,newList);
+        Map<String, Scores> changedMap = dao.removeSingleRowOfStudentScores(studentName);
+        view.displayRemovedStudentScoreData(studentName, changedMap);
     }
-
-
-    //to define:
 
     private void getAverageQuizScoreForWholeClass(){
 

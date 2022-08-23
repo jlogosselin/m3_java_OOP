@@ -18,38 +18,30 @@ public class StudentQuizGradesView {
 
     public int printMenuAndGetSelection() {
 
-        io.print("Main Menu");
+        io.print("\nMain Menu");
         io.print("1. Print all student-score data");
-        io.print("2. Create new piece of student-score data");
-        io.print("3. View specific piece of student-score data");
-        io.print("4. Remove specific piece of student-score data");
-        io.print("5. Exit");
+        io.print("2. Add new student-score data");
+        io.print("3. View specific student-score data");
+        io.print("4. Remove specific student-score data");
+        io.print("5. Get average of all group's quiz scores");
+        io.print("6. Get list of students with highest scores");
+        io.print("7. Get list of students with lowest scores");
+        io.print("8. Exit");
 
         return io.readInt("Please select from the above choices.", 1, 5);
     }
 
     /////////////////////////////////////   all banners  /////////////////////////////////////////////
 
-    public void displayCreateStudentScoreRowBanner() {
-        io.print("=== Create Student-Score data ===");
-    }
-    public void displayCreateStudentScoreRowSuccessBanner() {io.readString("Student-Score data row successfully created.  Please hit enter to continue");}
-    public void displayAllStudentScoreRowsBanner() {
-        io.print("=== Display All Student-Score rows ===");
-    }
-    public void displaySpecificStudentScoreRowBanner() {
-        io.print("=== Display Specific Data for chosen Student; enter name of student: ===");
-    }
-    public String getStudentNameChoice() {
-        return io.readString("Please enter the Student name.");
-    }
-    public void displayRemoveSpecificStudentScoreDataBanner () {io.print("=== Remove Specific Student-Score row ===");}
-    public void displayExitBanner() {
-        io.print("Good Bye!!!");
-    }
-    public void displayUnknownCommandBanner() {
-        io.print("Unknown Command!!!");
-    }
+    public void displayCreateStudentScoreRowBanner() {io.print("=== Creating student-score data ===");}
+    public void displayCreateStudentScoreRowSuccessBanner() {io.readString("Student-core data row successfully created.  Please hit enter to continue");}
+    public void displayAllStudentScoreRowsBanner() {io.print("=== Displaying all student-score data ===");}
+    public void displaySpecificStudentScoreRowBanner() {io.print("=== Displaying specific data for chosen Student ===");}
+    public void displayAverageScoreBanner() {io.print("=== Displaying average score of whole group ===");}
+    public String getStudentNameChoice() {return io.readString("Please enter the Student name.");}
+    public void displayRemoveSpecificStudentScoreDataBanner () {io.print("=== Removing specific student-score row ===");}
+    public void displayExitBanner() {io.print("Goodbye!!!");}
+    public void displayUnknownCommandBanner() {io.print("Unknown Command!!!");}
     public void displayErrorMessage(String errorMsg) {
         io.print("=== ERROR ===");
         io.print(errorMsg);
@@ -71,7 +63,6 @@ public class StudentQuizGradesView {
         io.print("Enter 5 quiz scores for this student:");
         for(int i=0; i<5; i++){
             int score = io.readInt("Enter score no." + (i+1) + ":");
-            //implement score input verification...
             scoreList.addSingleScoreToList(score);
         }
         return scoreList;
@@ -88,7 +79,6 @@ public class StudentQuizGradesView {
         for(String s : fullStudentScoreDataRows){
             System.out.println(s);
         }
-        io.readString("Please hit enter to continue.");
     }
 
     public void displaySpecificStudentScoreRow(String studentName, List<Integer> scoreList) {
@@ -97,21 +87,19 @@ public class StudentQuizGradesView {
             for(Integer i : scoreList){
                 io.print(String.valueOf(i));
             }
-        } else {
-            io.print("No such student exists.");
-        }
-        io.readString("Please hit enter to continue.");
+        } else {io.print("No such student exists.");}
     }
 
-    public void displayRemoveResult(String studentRecord, Map<Student, Scores> map) {
+    public void displayRemovedStudentScoreData(String studentRecord, Map<String, Scores> map) {
         boolean isInMap = map.containsKey(studentRecord);
         if(isInMap){
-            io.print("Student-Score row successfully removed.");
+            io.print("Bizarre: this item was deleted...");
         }else{
-            io.print("No such student-score row exists.");
+            io.print("Student-Score row successfully removed.");
         }
-        io.readString("Please hit enter to continue.");
     }
+
+
 
 
 }
