@@ -8,7 +8,6 @@ import java.util.HashMap;
 
 public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
 
-    //creating our COLLECTION DATA STRUCTURE attribute (of class types STUDENT & SCORES):
     private Map<String, Scores> studentScoreData = new HashMap<>();
     public static final String QUIZ_SCORES_FILE = "quiz_scores.txt";
     public static final String DELIMITER = "::";
@@ -129,7 +128,12 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
         return lastResult;
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////  helper methods  //////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
+
     private void loadQuizScoreFileIntoHashMap() throws StudentQuizGradesDaoException {
+
         Scanner scanner;
         try {
             // Create Scanner for reading the file
@@ -180,13 +184,6 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
         return hashMapFromFile;
     }
 
-    /**
-     * Writes all students in the roster out to a ROSTER_FILE.  See loadRoster
-     * for file format.
-     *
-     * @throws StudentQuizGradesDaoException if an error occurs writing to the file
-     */
-
     private void writeHashMapToFile() throws StudentQuizGradesDaoException {
 
         PrintWriter out;
@@ -206,11 +203,10 @@ public class StudentQuizGradesDaoImpl implements StudentQuizGradesDao{
             out.flush();
         }
 
-        // Clean up
         out.close();
     }
 
-    private String marshallStudentScoreData(String k, Scores v) throws StudentQuizGradesDaoException{
+    private String marshallStudentScoreData(String k, Scores v){
 
         String fullDataLine = "";
         fullDataLine += k;

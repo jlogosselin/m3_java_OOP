@@ -24,6 +24,4 @@ public interface StudentQuizGradesDao {
     String getHighestScore(LinkedHashMap<String, Integer> l) throws StudentQuizGradesDaoException;
 
     String getLowestScore(LinkedHashMap<String, Integer> l) throws StudentQuizGradesDaoException;
-
-
 }

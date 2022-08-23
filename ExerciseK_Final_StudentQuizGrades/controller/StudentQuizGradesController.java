@@ -23,14 +23,18 @@ public class StudentQuizGradesController {
     }
 
     public void run() {
+
         boolean keepGoing = true;
         int menuSelection = 0;
+
         try {
+
             while (keepGoing) {
 
                 menuSelection = getMenuSelection();
 
                 switch (menuSelection) {
+
                     case 1:
                         listAllStudentScoresRows();
                         break;
@@ -58,7 +62,6 @@ public class StudentQuizGradesController {
                     default:
                         unknownCommand();
                 }
-
             }
             exitMessage();
         } catch (StudentQuizGradesDaoException e) {
@@ -70,7 +73,6 @@ public class StudentQuizGradesController {
         return view.printMenuAndGetSelection();
     }
 
-    //done
     private void listAllStudentScoresRows() throws StudentQuizGradesDaoException {
         view.displayAllStudentScoreRowsBanner();
         List<String> studentList = new ArrayList<>();
@@ -78,7 +80,6 @@ public class StudentQuizGradesController {
         view.displayAllStudentScoreRows(studentList);
     }
 
-    //done
     private void createSingleStudentScoresRow() throws StudentQuizGradesDaoException {
         view.displayCreateStudentScoreRowBanner();
         Student newStudent = view.enterNewStudentName();
@@ -88,7 +89,6 @@ public class StudentQuizGradesController {
         view.displayCreateStudentScoreRowSuccessBanner();
     }
 
-    //done
     private void viewSingleStudentScoresRow() throws StudentQuizGradesDaoException {
         view.displaySpecificStudentScoreRowBanner();
         String studentName = view.getStudentNameChoice();
